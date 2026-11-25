@@ -1,4 +1,5 @@
 # SaaS Subscription Frontend
+[![CI](https://github.com/JayantBansal900/saas-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/JayantBansal900/saas-frontend/actions/workflows/ci.yml)
 
 React client for a subscription-based SaaS app. Users sign up, browse plans and manage their subscription; admins manage plans and users. Pairs with [saas-backend](https://github.com/JayantBansal900/saas-backend).
 
