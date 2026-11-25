@@ -1,6 +1,17 @@
 import { create } from 'zustand';
 
-export const usePlanStore = create((set) => ({
+export interface Plan {
+  _id: string;
+  name: string;
+  price: number;
+}
+
+interface PlanState {
+  plans: Plan[];
+  setPlans: (data: Plan[]) => void;
+}
+
+export const usePlanStore = create<PlanState>((set) => ({
   plans: [],
-  setPlans: (data: any[]) => set({ plans: data }),
+  setPlans: (data) => set({ plans: data }),
 }));

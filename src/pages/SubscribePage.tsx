@@ -10,7 +10,8 @@ interface Plan {
 
 interface Subscription {
   _id: string;
-  planId: any;
+  /** Plan id, or the full plan when the API populates it */
+  planId: string | { _id: string; name: string };
   status: string;
 }
 
@@ -23,7 +24,7 @@ const SubscribePage = () => {
     axios
       .get('http://localhost:3000/subscriptions', { withCredentials: true })
       .then((res) => {
-        const active = res.data.find((sub: any) => sub.status === 'active');
+        const active = (res.data as Subscription[]).find((sub) => sub.status === 'active');
         setSubscription(active || null);
       })
       .catch((err) => console.error('Error fetching subscription:', err))
@@ -62,7 +63,7 @@ const SubscribePage = () => {
   };
 
   if (isLoading || loadingSub) return <p>Loading plans...</p>;
-  if (isError) return <p>Failed to load plans. Error: {(error as any)?.message}</p>;
+  if (isError) return <p>Failed to load plans. Error: {error instanceof Error ? error.message : String(error)}</p>;
 
   return (
     <div className="p-6">
@@ -70,7 +71,9 @@ const SubscribePage = () => {
 
       {subscription && (
         <div className="bg-green-100 text-green-800 p-4 rounded mb-6">
-          ✅ Subscribed to: <strong>{subscription.planId?.name || subscription.planId}</strong>
+          ✅ Subscribed to: <strong>
+            {typeof subscription.planId === 'object' ? subscription.planId.name : subscription.planId}
+          </strong>
           <br />
           Status: <strong>{subscription.status}</strong>
           <br />

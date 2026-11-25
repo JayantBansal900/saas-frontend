@@ -5,7 +5,8 @@ const API = 'http://localhost:3000/subscriptions';
 
 interface Subscription {
   _id: string;
-  planId?: any;
+  /** Plan id, or the full plan when the API populates it */
+  planId?: string | { _id: string; name: string };
   status: string;
 }
 
